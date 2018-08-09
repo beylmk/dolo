@@ -14,6 +14,12 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setUpNavigationDrawer()
+
+    }
+
+    internal fun setUpNavigationDrawer() {
         setContentView(R.layout.activity_drawer)
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
