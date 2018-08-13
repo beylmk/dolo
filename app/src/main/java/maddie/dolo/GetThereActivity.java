@@ -3,15 +3,21 @@ package maddie.dolo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class GetThereActivity extends BaseActivity implements OnMapReadyCallback {
 
@@ -27,6 +34,8 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
     private Marker doloresMarker;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,10 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setUpRequestRideButtons();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        checkLocationPermissions();
+
     }
 
     private void setUpRequestRideButtons() {
@@ -60,16 +73,24 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
     }
 
     private void deepLinkIntoLyft() {
-        checkLocationPermissions();
         if (isPackageInstalled(this, LYFT_PACKAGE)) {
             double dropOffLat = doloresMarker.getPosition().latitude;
             double dropOffLong = doloresMarker.getPosition().longitude;
             //TODO use URI builder to make this prettier
-            openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
-                    "&pickup[latitude]=37.764728" +
-                    "&pickup[longitude]=-122.422999" +
-                    "&destination[latitude]=" + dropOffLat +
-                    "&destination[longitude]=" + dropOffLong);
+
+            if (currentLocation != null) {
+                double pickUpLat = currentLocation.getLatitude();
+                double pickUpLong = currentLocation.getLongitude();
+                openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
+                        "&pickup[latitude]=" + pickUpLat +
+                        "&pickup[longitude]=" + pickUpLong +
+                        "&destination[latitude]=" + dropOffLat +
+                        "&destination[longitude]=" + dropOffLong);
+            } else {
+                openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
+                        "&destination[latitude]=" + dropOffLat +
+                        "&destination[longitude]=" + dropOffLong);
+            }
         } else {
             openPlayStoreLink(this, "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct");
         }
@@ -129,18 +150,24 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_location_permission)
+                        .setMessage(R.string.text_location_permission)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //Prompt the user once explanation has been shown
+                                ActivityCompat.requestPermissions(GetThereActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
             } else {
-                // No explanation needed; request the permission
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
             }
         }
     }
@@ -152,18 +179,27 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //TODO get current location
-                    Toast.makeText(this, "you can use user's location for lyft", Toast.LENGTH_LONG).show();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(this, "you cannot use user's location for lyft", Toast.LENGTH_LONG).show();
+                    getCurrentLocation();
                 }
                 return;
             }
+        }
+    }
 
-            // other 'case' lines to check for other
-            // permissions this app might request.
+    private void getCurrentLocation() {
+        try {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                currentLocation = location;
+                            }
+                        }
+                    });
+        } catch (SecurityException e) {
+            Log.e(GetThereActivity.class.getSimpleName(), "you don't have location access yet");
         }
     }
 }

@@ -11,4 +11,7 @@
     <string name="get_there_title">Get There!</string>
     <string name="title_activity_weather">Weather</string>
     <string name="title_activity_get_there">Get There!</string>
+    <string name="title_location_permission">Dolo needs your permission</string>
+    <string name="text_location_permission">Grant Dolo permission to get your current location in order to make ride-sharing requests more seamless! Or, if you don\'t want to share, you can set your pickup loation in the rideshare app itself.</string>
+    <string name="ok">Grant permission</string>
 </resources>
