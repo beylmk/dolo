@@ -9,4 +9,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="get_there_title">Get There!</string>
+    <string name="title_activity_weather">Weather</string>
+    <string name="title_activity_get_there">Get There!</string>
 </resources>
