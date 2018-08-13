@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GetThereActivity extends BaseActivity implements OnMapReadyCallback {
@@ -22,16 +23,17 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
     private static final String TAG = "lyft:Example";
     private static final String LYFT_PACKAGE = "me.lyft.android";
     private GoogleMap mMap;
+    private Marker doloresMarker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_there);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+//         Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         setUpRequestRideButtons();
     }
 
@@ -43,22 +45,33 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 deepLinkIntoLyft();
             }
         });
+
+        Button uberButton = findViewById(R.id.uber_button);
+        uberButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO deep link into uber
+                Toast.makeText(GetThereActivity.this, "deep link into uber", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void deepLinkIntoLyft() {
         if (isPackageInstalled(this, LYFT_PACKAGE)) {
-            //This intent will help you to launch if the package is already installed
-            openLink( this, "lyft://");
-
-            Log.d(TAG, "Lyft is already installed on your phone.");
+            double dropOffLat = doloresMarker.getPosition().latitude;
+            double dropOffLong = doloresMarker.getPosition().longitude;
+            //TODO use URI builder to make this prettier
+            openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
+                    "&pickup[latitude]=37.764728" +
+                    "&pickup[longitude]=-122.422999" +
+                    "&destination[latitude]=" + dropOffLat +
+                    "&destination[longitude]=" + dropOffLong);
         } else {
-            openLink(this, "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct");
-
-            Log.d(TAG, "Lyft is not currently installed on your phone..");
+            openPlayStoreLink(this, "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct");
         }
     }
 
-    static void openLink(Activity activity, String link) {
+    static void openPlayStoreLink(Activity activity, String link) {
         Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
         playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         playStoreIntent.setData(Uri.parse(link));
@@ -76,20 +89,33 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         return false;
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setIndoorEnabled(false);
         LatLng dolores = new LatLng(37.7596, -122.4269);
-        mMap.addMarker(new MarkerOptions().position(dolores).title("Marker in Dolores"));
+        //TODO set icon for map marker
+        doloresMarker = mMap.addMarker(new MarkerOptions()
+                .position(dolores)
+                .title("Hold & drag me to move dropoff")
+                .draggable(true));
+        doloresMarker.showInfoWindow();
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                //TODO update icon for on marker drag start to something cute
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                doloresMarker.setPosition(marker.getPosition());
+            }
+        });
         mMap.moveCamera(CameraUpdateFactory.newLatLng(dolores));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.5f));
     }
 }
