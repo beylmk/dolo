@@ -1,11 +1,13 @@
 package maddie.dolo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
 
     private static final String TAG = "lyft:Example";
     private static final String LYFT_PACKAGE = "me.lyft.android";
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
     private Marker doloresMarker;
 
@@ -57,6 +60,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
     }
 
     private void deepLinkIntoLyft() {
+        checkLocationPermissions();
         if (isPackageInstalled(this, LYFT_PACKAGE)) {
             double dropOffLat = doloresMarker.getPosition().latitude;
             double dropOffLong = doloresMarker.getPosition().longitude;
@@ -117,5 +121,49 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         });
         mMap.moveCamera(CameraUpdateFactory.newLatLng(dolores));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16.5f));
+    }
+
+    private void checkLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //TODO get current location
+                    Toast.makeText(this, "you can use user's location for lyft", Toast.LENGTH_LONG).show();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, "you cannot use user's location for lyft", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }

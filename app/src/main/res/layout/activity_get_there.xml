@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" />
 
-    <!--TODO switch to a single FAB with sub-FABS for each option-->
+    <!--TODO switch to a FAB for ride ordering-->
 
     <Button
         android:id="@+id/lyft_button"
