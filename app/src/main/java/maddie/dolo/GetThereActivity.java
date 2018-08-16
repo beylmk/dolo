@@ -29,13 +29,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class GetThereActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private static final String TAG = "lyft:Example";
     private static final String LYFT_PACKAGE = "me.lyft.android";
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap mMap;
     private Marker doloresMarker;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private Location currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,10 +43,6 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         setUpRequestRideButtons();
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        checkLocationPermissions();
-
     }
 
     private void setUpRequestRideButtons() {
@@ -66,10 +58,19 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         uberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO deep link into uber
-                Toast.makeText(GetThereActivity.this, "deep link into uber", Toast.LENGTH_LONG).show();
+                deepLinkIntoUber();
             }
         });
+    }
+
+    private void deepLinkIntoUber() {
+        double dropOffLat = doloresMarker.getPosition().latitude;
+        double dropOffLong = doloresMarker.getPosition().longitude;
+
+        openPlayStoreLink(this, "uber://?action=setPickup" +
+                "&pickup=my_loction" +
+                "&dropoff[latitude]=" + dropOffLat +
+                "&dropoff[longitude]=" + dropOffLong);
     }
 
     private void deepLinkIntoLyft() {
@@ -78,19 +79,10 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
             double dropOffLong = doloresMarker.getPosition().longitude;
             //TODO use URI builder to make this prettier
 
-            if (currentLocation != null) {
-                double pickUpLat = currentLocation.getLatitude();
-                double pickUpLong = currentLocation.getLongitude();
-                openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
-                        "&pickup[latitude]=" + pickUpLat +
-                        "&pickup[longitude]=" + pickUpLong +
-                        "&destination[latitude]=" + dropOffLat +
-                        "&destination[longitude]=" + dropOffLong);
-            } else {
-                openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
-                        "&destination[latitude]=" + dropOffLat +
-                        "&destination[longitude]=" + dropOffLong);
-            }
+            openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
+                    "&destination[latitude]=" + dropOffLat +
+                    "&destination[longitude]=" + dropOffLong);
+
         } else {
             openPlayStoreLink(this, "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct");
         }
@@ -142,64 +134,5 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         });
         mMap.moveCamera(CameraUpdateFactory.newLatLng(dolores));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16.5f));
-    }
-
-    private void checkLocationPermissions() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.title_location_permission)
-                        .setMessage(R.string.text_location_permission)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(GetThereActivity.this,
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-                            }
-                        })
-                        .create()
-                        .show();
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            }
-        }
-    }
-
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
-                }
-                return;
-            }
-        }
-    }
-
-    private void getCurrentLocation() {
-        try {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                currentLocation = location;
-                            }
-                        }
-                    });
-        } catch (SecurityException e) {
-            Log.e(GetThereActivity.class.getSimpleName(), "you don't have location access yet");
-        }
     }
 }

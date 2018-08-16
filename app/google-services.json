@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "528979061472",
+    "firebase_url": "https://dolo-912a8.firebaseio.com",
+    "project_id": "dolo-912a8",
+    "storage_bucket": "dolo-912a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528979061472:android:9d4680dbf11906f1",
+        "android_client_info": {
+          "package_name": "maddie.dolo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528979061472-3cgfe5c4pvqhc30p41kaurh4l8rps3jl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "maddie.dolo",
+            "certificate_hash": "e645e0126aa8c65fbe549d308c19e69790d2bd44"
+          }
+        },
+        {
+          "client_id": "528979061472-4485savu6pki83nbcjos75il2a0hvoaa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0xfgOF-KMUFDTg1vSoww_sNldW3PsFXk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528979061472-4485savu6pki83nbcjos75il2a0hvoaa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

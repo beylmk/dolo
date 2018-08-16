@@ -14,4 +14,8 @@
     <string name="title_location_permission">Dolo needs your permission</string>
     <string name="text_location_permission">Grant Dolo permission to get your current location in order to make ride-sharing requests more seamless! Or, if you don\'t want to share, you can set your pickup loation in the rideshare app itself.</string>
     <string name="ok">Grant permission</string>
+    <string name="facebook_app_id">2181998138748052</string>
+    <string name="facebook_application_id">2181998138748052</string>
+    <string name="fb_login_protocol_scheme">fb2181998138748052</string>
+    <string name="trouble_signing_in">Trouble signing in…</string>
 </resources>
