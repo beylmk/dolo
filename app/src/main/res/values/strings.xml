@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Dolo</string>
-    <string name="title_activity_weather">WeatherActivity</string>
+    <string name="title_weather">WeatherActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -8,4 +8,14 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="get_there_title">Get There!</string>
+    <string name="title_activity_weather">Weather</string>
+    <string name="title_activity_get_there">Get There!</string>
+    <string name="title_location_permission">Dolo needs your permission</string>
+    <string name="text_location_permission">Grant Dolo permission to get your current location in order to make ride-sharing requests more seamless! Or, if you don\'t want to share, you can set your pickup loation in the rideshare app itself.</string>
+    <string name="ok">Grant permission</string>
+    <string name="facebook_app_id">2181998138748052</string>
+    <string name="facebook_application_id">2181998138748052</string>
+    <string name="fb_login_protocol_scheme">fb2181998138748052</string>
+    <string name="trouble_signing_in">Trouble signing in…</string>
 </resources>
