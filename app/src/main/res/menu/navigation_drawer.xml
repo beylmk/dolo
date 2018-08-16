@@ -12,6 +12,11 @@
                 android:id="@+id/nav_get_there"
                 android:icon="@drawable/car_icon"
                 android:title="@string/get_there_title"/>
+
+        <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/car_icon"
+                android:title="@string/logout"/>
     </group>
 
 </menu>

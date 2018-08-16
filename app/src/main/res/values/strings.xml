@@ -18,4 +18,7 @@
     <string name="facebook_application_id">2181998138748052</string>
     <string name="fb_login_protocol_scheme">fb2181998138748052</string>
     <string name="trouble_signing_in">Trouble signing in…</string>
+    <string name="logout">Logout</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
