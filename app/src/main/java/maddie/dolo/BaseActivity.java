@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         NavigationView navigationView = fullView.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//        navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture)
+        TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_profile_name);
+        userNameTextView.setText("usre name here");
 
     }
 
