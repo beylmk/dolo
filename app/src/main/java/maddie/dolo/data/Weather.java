@@ -10,14 +10,14 @@ public class Weather {
     @PrimaryKey
     private int id;
 
-    @ColumnInfo
+    @ColumnInfo()
     private int date;
 
-    @ColumnInfo
-    private long temp_min;
+    @ColumnInfo(name = "temp_min")
+    private long tempMin;
 
-    @ColumnInfo
-    private long temp_max;
+    @ColumnInfo(name = "temp_max")
+    private long tempMax;
 
     @ColumnInfo
     private String main;
@@ -25,11 +25,11 @@ public class Weather {
     @ColumnInfo
     private String description;
 
-    public Weather(int id, int date, long temp_min, long temp_max, String main, String description){
+    public Weather(int id, int date, long tempMin, long tempMax, String main, String description) {
         this.id = id;
         this.date = date;
-        this.temp_min = temp_min;
-        this.temp_max = temp_max;
+        this.tempMin = tempMin;
+        this.tempMax = tempMax;
         this.main = main;
         this.description = description;
     }
@@ -38,9 +38,9 @@ public class Weather {
 
     public int getDate() { return date; }
 
-    public long getTempMin() { return temp_min; }
+    public long getTempMin() { return tempMin; }
 
-    public long getTempMax() { return temp_max; }
+    public long getTempMax() { return tempMax; }
 
     public String getMain() { return main; }
 
