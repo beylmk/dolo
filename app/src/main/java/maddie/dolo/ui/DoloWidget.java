@@ -1,22 +1,25 @@
-package maddie.dolo;
+package maddie.dolo.ui;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.widget.Button;
 import android.widget.RemoteViews;
+
+import maddie.dolo.R;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class DoloWidget extends AppWidgetProvider {
 
+    private Button lyftButton;
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.dolo_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

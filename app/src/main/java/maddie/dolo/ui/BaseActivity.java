@@ -1,4 +1,4 @@
-package maddie.dolo;
+package maddie.dolo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import maddie.dolo.R;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -1,4 +1,4 @@
-package maddie.dolo;
+package maddie.dolo.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
+
+import maddie.dolo.R;
 
 
 public class LoginActivity extends AppCompatActivity {
