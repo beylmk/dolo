@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "weather")
-public class Weather {
+public class WeatherModel {
 
     @PrimaryKey
     private int id;
@@ -25,7 +25,7 @@ public class Weather {
     @ColumnInfo
     private String description;
 
-    public Weather(int id, int date, long tempMin, long tempMax, String main, String description) {
+    public WeatherModel(int id, int date, long tempMin, long tempMax, String main, String description) {
         this.id = id;
         this.date = date;
         this.tempMin = tempMin;
