@@ -4,13 +4,13 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "weather")
+@Entity
 public class WeatherModel {
 
     @PrimaryKey
     private int id;
 
-    @ColumnInfo()
+    @ColumnInfo
     private int date;
 
     @ColumnInfo(name = "temp_min")

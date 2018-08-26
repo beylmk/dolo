@@ -1,23 +1,12 @@
 package maddie.dolo.data;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.ResultReceiver;
-import android.support.annotation.Nullable;
+import java.util.List;
 
-public class WeatherService extends IntentService {
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-    public WeatherService(String name) {
-        super(name);
-    }
+public interface WeatherService {
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-            Bundle bundle = new Bundle();
-            bundle.putString("hi", "ok");
-        }
-    }
+    @GET("https://api.github.com/")
+    Call<List<WeatherModel>> getWeather();
 }

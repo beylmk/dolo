@@ -2,17 +2,13 @@ package maddie.dolo.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import java.util.List;
 
 import maddie.dolo.R;
 import maddie.dolo.data.WeatherModel;
-import maddie.dolo.data.WeatherService;
 import maddie.dolo.data.WeatherViewModel;
 
 public class WeatherActivity extends BaseActivity {
