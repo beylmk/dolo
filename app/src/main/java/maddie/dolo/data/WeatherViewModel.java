@@ -1,25 +1,32 @@
 package maddie.dolo.data;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class WeatherViewModel extends AndroidViewModel {
+import javax.inject.Inject;
 
-    private final LiveData<List<WeatherModel>> weatherList;
+public class WeatherViewModel extends ViewModel {
 
-    private WeatherDatabase weatherDatabase;
+    private LiveData<List<Weather>> weather;
 
-    public WeatherViewModel(Application application) {
-        super(application);
+    private WeatherRepository weatherRepository;
 
-        weatherDatabase = WeatherDatabase.getWeatherDatabase(this.getApplication());
-        weatherList = weatherDatabase.weatherDao().getWeather();
+    @Inject
+    public WeatherViewModel(WeatherRepository weatherRepository) {
+        this.weatherRepository = weatherRepository;
     }
 
-    public LiveData<List<WeatherModel>> getWeatherList() {
-        return weatherList;
+    public void init() {
+        if (this.weather != null) {
+            return;
+        }
+        weather = weatherRepository.getWeather();
     }
+
+    public LiveData<List<Weather>> getWeather() {
+        return this.weather;
+    }
+
 }

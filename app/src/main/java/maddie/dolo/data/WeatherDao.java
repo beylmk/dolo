@@ -13,12 +13,12 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface WeatherDao {
 
     @Insert(onConflict = REPLACE)
-    public long[] insertWeather(WeatherModel... weather);
+    void insertWeather(List<Weather> weather);
 
     @Query("SELECT * FROM weather")
-    public LiveData<List<WeatherModel>> getWeather();
+    public LiveData<List<Weather>> getWeather();
 
     @Query("SELECT * FROM weather WHERE date = :date")
-    public LiveData<WeatherModel> getWeatherByDate(int date);
+    public LiveData<Weather> getWeatherByDate(int date);
 
 }

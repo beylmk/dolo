@@ -6,18 +6,17 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 
-public class WeatherService extends IntentService {
+import java.util.List;
 
-    public WeatherService(String name) {
-        super(name);
-    }
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-            Bundle bundle = new Bundle();
-            bundle.putString("hi", "ok");
-        }
-    }
+public interface WeatherService {
+
+    @GET("data/2.5//forecast?")
+    Call<List<Weather>> getWeather(@Query("lat") long latitude, @Query("lon") long longitude, @Query("appid") String apiKey);
+
+
 }

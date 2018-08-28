@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'OPEN_WEATHER_MAP_API_KEY', MyOpenWeatherMapApiKey
+    }
 }
 
 dependencies {
@@ -38,6 +42,19 @@ dependencies {
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    // GSON
+    compile 'com.google.code.gson:gson:2.8.2'
+
+    // RETROFIT
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    // DAGGER 2
+    implementation 'com.google.dagger:dagger-android:2.12'
+    implementation 'com.google.dagger:dagger-android-support:2.12'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
 }
 
 apply plugin: 'com.google.gms.google-services'
