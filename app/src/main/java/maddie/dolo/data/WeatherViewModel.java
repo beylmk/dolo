@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 public class WeatherViewModel extends ViewModel {
 
-    private LiveData<List<Weather>> weather;
+    private LiveData<List<DayOfWeather>> weather;
 
     private WeatherRepository weatherRepository;
 
@@ -25,7 +25,7 @@ public class WeatherViewModel extends ViewModel {
         weather = weatherRepository.getWeather();
     }
 
-    public LiveData<List<Weather>> getWeather() {
+    public LiveData<List<DayOfWeather>> getWeather() {
         return this.weather;
     }
 

@@ -33,7 +33,7 @@ public class WeatherRepository {
 
     // ---
 
-    public LiveData<List<Weather>> getWeather() {
+    public LiveData<List<DayOfWeather>> getWeather() {
         refreshWeather(); // try to refresh data if possible from Github Api
         return weatherDao.getWeather(); // return a LiveData directly from the database.
     }
@@ -48,23 +48,23 @@ public class WeatherRepository {
 //            boolean userExists = (userDao.hasUser(userLogin, getMaxRefreshTime(new Date())) != null);
                 // If user have to be updated
 //            if (!userExists) {
-                webservice.getWeather(38, -122, BuildConfig.OPEN_WEATHER_MAP_API_KEY).enqueue(new Callback<List<Weather>>() {
+                webservice.getWeather(38, 122, BuildConfig.OPEN_WEATHER_MAP_API_KEY).enqueue(new Callback<WeatherResponse>() {
                     @Override
-                    public void onResponse(Call<List<Weather>> call, final Response<List<Weather>> response) {
-                        Log.e("TAG", "DATA REFRESHED FROM NETWORK");
+                    public void onResponse(Call<WeatherResponse> call, final Response<WeatherResponse> response) { Log.e("TAG", "DATA REFRESHED FROM NETWORK");
                         Toast.makeText(App.context, "Data refreshed from network !", Toast.LENGTH_LONG).show();
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
-                                List<Weather> weather = response.body();
+                                List<DayOfWeather> daysOfWeather = response.body().getList();
 //                            user.setLastRefresh(new Date());
-                                weatherDao.insertWeather(weather);
+                                weatherDao.insertWeather(daysOfWeather);
                             }
                         });
                     }
 
                     @Override
-                    public void onFailure(Call<List<Weather>> call, Throwable t) {
+                    public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                        Log.e("TAG", "");
                     }
                 });
 //            }

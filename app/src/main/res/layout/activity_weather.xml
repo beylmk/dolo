@@ -8,7 +8,7 @@
         tools:context=".ui.WeatherActivity">
 
     <TextView
-            android:text="hi you are now on the weather scren"
+            android:text="hi you are now on the dayOfWeather scren"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
