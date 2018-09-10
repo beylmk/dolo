@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Converters {
 
@@ -17,8 +20,7 @@ public class Converters {
         Gson gson = new Gson();
         Type type = new TypeToken<Main>() {
         }.getType();
-        String json = gson.toJson(main, type);
-        return json;
+        return gson.toJson(main, type);
     }
 
     @TypeConverter
@@ -29,7 +31,38 @@ public class Converters {
         Gson gson = new Gson();
         Type type = new TypeToken<Main>() {
         }.getType();
-        Main main = gson.fromJson(mainString, type);
-        return main;
+        return gson.fromJson(mainString, type);
     }
+
+    @TypeConverter
+    public String fromWeatherObject(List<WeatherObject> weatherObject) {
+        if (weatherObject == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<WeatherObject>>() {
+        }.getType();
+        return gson.toJson(weatherObject, type);
+    }
+
+    @TypeConverter
+    public List<WeatherObject> toWeatherObject(String weatherObjectString) {
+        if (weatherObjectString == null) {
+            return (null);
+        }
+        Gson gson = new Gson();
+
+        Type type = new TypeToken<List<WeatherObject>>() {}.getType();
+        return gson.fromJson(weatherObjectString, type);
+    }
+
+//    @TypeConverter
+//    public Date toDate(long dateText) {
+//        return new Date(dateText*1000L);
+//    }
+//
+//    @TypeConverter
+//    public long toLong(Date date) {
+//        return date.getTime() / 1000;
+//    }
 }

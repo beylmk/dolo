@@ -55,8 +55,10 @@ public class WeatherRepository {
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
+                                //TODO filter out to only include data points we care about
                                 List<DayOfWeather> daysOfWeather = response.body().getList();
 //                            user.setLastRefresh(new Date());
+
                                 weatherDao.insertWeather(daysOfWeather);
                             }
                         });

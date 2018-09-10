@@ -30,6 +30,7 @@ public class AppModule {
     WeatherDatabase provideDatabase(Application application) {
         return Room.databaseBuilder(application,
                 WeatherDatabase.class, "weather.db")
+                .fallbackToDestructiveMigration()
                 .build();
     }
 

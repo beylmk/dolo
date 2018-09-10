@@ -3,8 +3,9 @@ package maddie.dolo.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
+
+import java.util.List;
 
 @Entity
 public class DayOfWeather {
@@ -12,29 +13,41 @@ public class DayOfWeather {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name="dt_text")
-    private String date;
+    @ColumnInfo
+    private long dt;
 
     @ColumnInfo
     @TypeConverters(Converters.class)
     private Main main;
 
-    public DayOfWeather(int id, String date, Main main) {
+    @ColumnInfo
+    @TypeConverters(Converters.class)
+    private List<WeatherObject> weather;
+
+    public DayOfWeather(int id, long dt, Main main) {
         this.id = id;
-        this.date = date;
+        this.dt = dt;
         this.main = main;
     }
 
     public int getId() { return id; }
 
-    public String getDate() { return date; }
+    public long getDt() { return dt; }
 
     public Main getMain() { return main; }
 
     public void setId(int id) { this.id = id; }
 
-    public void setDate(String date) { this.date = date; }
+    public void setDt(long date) { this.dt = date; }
 
     public void setMain(Main main) { this.main = main; }
+
+    public List<WeatherObject> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<WeatherObject> weatherObject) {
+        this.weather = weatherObject;
+    }
 
 }
