@@ -30,32 +30,32 @@
 
     <Button
         android:id="@+id/lyft_button"
-        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/uber_button"
-        android:text="request a lyft!"
+        android:text="@string/order_lyft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/uber_button"
-        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintTop_toBottomOf="@id/map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lyft_button"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="request an uber!"
+        android:text="@string/order_uber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <!--&lt;!&ndash;<Button&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/waze_button"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+    <!--<Button-->
+        <!--android:id="@+id/waze_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
-    <!--&lt;!&ndash;<Button&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/google_maps_button"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content" />&ndash;&gt;-->
+    <!--<Button-->
+        <!--android:id="@+id/google_maps_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
 </android.support.constraint.ConstraintLayout>

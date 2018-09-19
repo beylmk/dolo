@@ -47,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         navigationView.setNavigationItemSelectedListener(this);
 //        navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture)
         TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_profile_name);
-        userNameTextView.setText("usre name here");
+        userNameTextView.setText("username");
 
     }
 
@@ -81,10 +81,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                             Toast.makeText(BaseActivity.this, "Logged out", Toast.LENGTH_LONG).show();
                         }
                     });
+        } else if (id == R.id.nav_home) {
+            Intent homeIntent = new Intent(this, HomeActivity.class);
+            startActivity(homeIntent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
