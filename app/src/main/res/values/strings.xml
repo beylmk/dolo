@@ -22,4 +22,12 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="todays_weather">Today</string>
+    <string name="order_lyft">Order a Lyft</string>
+    <string name="order_uber">Order an Uber</string>
+    <string name="marker_title"><![CDATA[Hold & drag me to move dropoff]]></string>
+    <string name="nav_weather">Weather</string>
+    <string name="nav_home">Home</string>
+    <string name="temperature">Temperature: %1$s\u00B0</string>
+    <string name="temperature_value">%1$s\u00B0</string>
+    <string name="humidity">Humidity: %1$d</string>
 </resources>

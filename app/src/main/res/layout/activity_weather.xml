@@ -18,6 +18,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/todays_temperature_text_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/todays_weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/todays_humidity_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/todays_temperature_text_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/todays_weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/todays_weather_icon"
         android:layout_width="80dp"
@@ -45,5 +61,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/half_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent=".5" />
+
+    <include android:id="@+id/upcoming_day_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/upcoming_day_2"
+        layout="@layout/upcoming_day_weather_view"/>
+
+    <include android:id="@+id/upcoming_day_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/upcoming_day_1"
+        app:layout_constraintEnd_toStartOf="@+id/upcoming_day_3"
+        layout="@layout/upcoming_day_weather_view"/>
+
+    <include android:id="@+id/upcoming_day_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/half_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/upcoming_day_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        layout="@layout/upcoming_day_weather_view"/>
 
 </android.support.constraint.ConstraintLayout>

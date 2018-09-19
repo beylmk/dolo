@@ -48,7 +48,7 @@ public class WeatherRepository {
 //            boolean userExists = (userDao.hasUser(userLogin, getMaxRefreshTime(new Date())) != null);
                 // If user have to be updated
 //            if (!userExists) {
-                webservice.getWeather(38, 122, BuildConfig.OPEN_WEATHER_MAP_API_KEY).enqueue(new Callback<WeatherResponse>() {
+                webservice.getWeather(38, 122, "imperial", BuildConfig.OPEN_WEATHER_MAP_API_KEY).enqueue(new Callback<WeatherResponse>() {
                     @Override
                     public void onResponse(Call<WeatherResponse> call, final Response<WeatherResponse> response) { Log.e("TAG", "DATA REFRESHED FROM NETWORK");
                         Toast.makeText(App.context, "Data refreshed from network !", Toast.LENGTH_LONG).show();

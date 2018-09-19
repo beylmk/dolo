@@ -18,13 +18,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.net.URI;
+
+import maddie.dolo.GetThereUtil;
 import maddie.dolo.R;
 import maddie.dolo.ui.BaseActivity;
 
 public class GetThereActivity extends BaseActivity implements OnMapReadyCallback {
 
     private static final String LYFT_PACKAGE = "me.lyft.android";
-    private GoogleMap mMap;
+    private static final String UBER_PACKAGE = "uber";
     private Marker doloresMarker;
 
     @Override
@@ -44,7 +47,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         lyftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deepLinkIntoLyft();
+                deepLinkIntoRideShare(LYFT_PACKAGE);
             }
         });
 
@@ -52,41 +55,50 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
         uberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deepLinkIntoUber();
+                deepLinkIntoRideShare(UBER_PACKAGE);
             }
         });
     }
 
-    private void deepLinkIntoUber() {
+    private void deepLinkIntoRideShare(String packageName) {
         double dropOffLat = doloresMarker.getPosition().latitude;
         double dropOffLong = doloresMarker.getPosition().longitude;
+        switch (packageName) {
+            case LYFT_PACKAGE: deepLinkIntoLyft(dropOffLat, dropOffLong);
+            default: deepLinkIntoUber(dropOffLat, dropOffLong);
+        }
 
+    }
+
+    private void deepLinkIntoUber(double dropOffLat, double dropOffLong) {
         openPlayStoreLink(this, "uber://?action=setPickup" +
                 "&pickup=my_loction" +
                 "&dropoff[latitude]=" + dropOffLat +
                 "&dropoff[longitude]=" + dropOffLong);
     }
 
-    private void deepLinkIntoLyft() {
+    private void deepLinkIntoLyft(double dropOffLat, double dropOffLong) {
         if (isPackageInstalled(this, LYFT_PACKAGE)) {
-            double dropOffLat = doloresMarker.getPosition().latitude;
-            double dropOffLong = doloresMarker.getPosition().longitude;
             //TODO use URI builder to make this prettier
 
             openPlayStoreLink(this, "lyft://ridetype?id=lyft" +
                     "&destination[latitude]=" + dropOffLat +
                     "&destination[longitude]=" + dropOffLong);
-
         } else {
-            openPlayStoreLink(this, "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct");
+            openPlayStoreLink(this, GetThereUtil.LYFT_PLAY_STORE_LINK);
         }
     }
 
     static void openPlayStoreLink(Activity activity, String link) {
+        Intent playStoreIntent = getPlayStoreIntent(link);
+        activity.startActivity(playStoreIntent);
+    }
+
+    static Intent getPlayStoreIntent(String link) {
         Intent playStoreIntent = new Intent(Intent.ACTION_VIEW);
         playStoreIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         playStoreIntent.setData(Uri.parse(link));
-        activity.startActivity(playStoreIntent);
+        return playStoreIntent;
     }
 
     static boolean isPackageInstalled(Context context, String packageId) {
@@ -102,20 +114,17 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setIndoorEnabled(false);
+        googleMap.setIndoorEnabled(false);
         LatLng dolores = new LatLng(37.7596, -122.4269);
-        //TODO set icon for map marker
-        doloresMarker = mMap.addMarker(new MarkerOptions()
+        doloresMarker = googleMap.addMarker(new MarkerOptions()
                 .position(dolores)
-                .title("Hold & drag me to move dropoff")
+                .title(getString(R.string.marker_title))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.dolo_app_icon))
                 .draggable(true));
         doloresMarker.showInfoWindow();
-        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
-                //TODO update icon for on marker drag start to something cute
             }
 
             @Override
@@ -127,7 +136,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                 doloresMarker.setPosition(marker.getPosition());
             }
         });
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dolores));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16.5f));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(dolores));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(16.5f));
     }
 }

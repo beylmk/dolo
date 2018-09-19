@@ -64,10 +64,12 @@ public class LoginActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                //TODO save user info into some kind of singleton?
                 advanceToHome();
                 // ...
             } else {
                 Toast.makeText(this, R.string.trouble_signing_in, Toast.LENGTH_LONG). show();
+                advanceToHome();
             }
         }
     }
