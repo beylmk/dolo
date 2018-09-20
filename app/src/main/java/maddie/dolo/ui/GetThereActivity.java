@@ -18,11 +18,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.net.URI;
-
-import maddie.dolo.GetThereUtil;
+import maddie.dolo.DoloUtil;
 import maddie.dolo.R;
-import maddie.dolo.ui.BaseActivity;
 
 public class GetThereActivity extends BaseActivity implements OnMapReadyCallback {
 
@@ -85,7 +82,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
                     "&destination[latitude]=" + dropOffLat +
                     "&destination[longitude]=" + dropOffLong);
         } else {
-            openPlayStoreLink(this, GetThereUtil.LYFT_PLAY_STORE_LINK);
+            openPlayStoreLink(this, DoloUtil.LYFT_PLAY_STORE_LINK);
         }
     }
 

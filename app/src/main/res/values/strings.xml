@@ -21,7 +21,7 @@
     <string name="logout">Logout</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="todays_weather">Today</string>
+    <string name="todays_weather">Now</string>
     <string name="order_lyft">Order a Lyft</string>
     <string name="order_uber">Order an Uber</string>
     <string name="marker_title"><![CDATA[Hold & drag me to move dropoff]]></string>
@@ -30,4 +30,7 @@
     <string name="temperature">Temperature: %1$s\u00B0</string>
     <string name="temperature_value">%1$s\u00B0</string>
     <string name="humidity">Humidity: %1$d</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="weather_refreshed">Weather Refreshed</string>
+    <string name="trouble_fetching_weather">Trouble fetching weather...</string>
 </resources>

@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import maddie.dolo.data.WeatherDao;
+import maddie.dolo.data.WeatherEntryDao;
 import maddie.dolo.data.WeatherDatabase;
 import maddie.dolo.data.WeatherRepository;
 import maddie.dolo.data.WeatherService;
@@ -36,7 +36,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    WeatherDao provideWeatherDao(WeatherDatabase database) { return database.weatherDao(); }
+    WeatherEntryDao provideWeatherDao(WeatherDatabase database) { return database.weatherDao(); }
 
     // --- REPOSITORY INJECTION ---
 
@@ -47,7 +47,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    WeatherRepository provideWeatherRepository(WeatherService webservice, WeatherDao userDao, Executor executor) {
+    WeatherRepository provideWeatherRepository(WeatherService webservice, WeatherEntryDao userDao, Executor executor) {
         return new WeatherRepository(webservice, userDao, executor);
     }
 

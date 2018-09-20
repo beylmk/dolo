@@ -3,11 +3,10 @@ package maddie.dolo.ui;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Button;
 import android.widget.RemoteViews;
 
-import maddie.dolo.GetThereUtil;
+import maddie.dolo.DoloUtil;
 import maddie.dolo.R;
 
 /**
@@ -26,8 +25,8 @@ public class DoloWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.dolo_widget);
 
-        views.setOnClickFillInIntent(R.id.lyft_widget_button, GetThereActivity.getPlayStoreIntent(GetThereUtil.LYFT_INTENT_URI));
-        views.setOnClickFillInIntent(R.id.uber_widget_button, GetThereActivity.getPlayStoreIntent(GetThereUtil.UBER_INTENT_URI));
+        views.setOnClickFillInIntent(R.id.lyft_widget_button, GetThereActivity.getPlayStoreIntent(DoloUtil.LYFT_INTENT_URI));
+        views.setOnClickFillInIntent(R.id.uber_widget_button, GetThereActivity.getPlayStoreIntent(DoloUtil.UBER_INTENT_URI));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

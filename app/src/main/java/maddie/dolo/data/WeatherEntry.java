@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 import java.util.List;
 
 @Entity
-public class DayOfWeather {
+public class WeatherEntry {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -24,7 +24,7 @@ public class DayOfWeather {
     @TypeConverters(Converters.class)
     private List<WeatherObject> weather;
 
-    public DayOfWeather(int id, long dt, Main main) {
+    public WeatherEntry(int id, long dt, Main main) {
         this.id = id;
         this.dt = dt;
         this.main = main;

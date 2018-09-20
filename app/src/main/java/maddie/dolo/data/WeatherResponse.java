@@ -8,13 +8,13 @@ public class WeatherResponse {
     private String cod;
     private String message;
     private Integer cnt;
-    private List<DayOfWeather> list = new ArrayList<>();
+    private List<WeatherEntry> list = new ArrayList<>();
 
-    public List<DayOfWeather> getList() {
+    public List<WeatherEntry> getList() {
         return list;
     }
 
-    public void setList(List<DayOfWeather> list) {
+    public void setList(List<WeatherEntry> list) {
         this.list = list;
     }
 
