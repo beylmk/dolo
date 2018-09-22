@@ -26,6 +26,8 @@ import maddie.dolo.data.Main;
 import maddie.dolo.data.WeatherObject;
 import maddie.dolo.data.WeatherViewModel;
 
+import static maddie.dolo.DoloUtil.UPCOMING_WEATHER_TIME_FORMAT;
+
 public class WeatherActivity extends BaseActivity {
 
     private static final String BASE_IMAGE_URL = "http://openweathermap.org/img/w/";
@@ -84,19 +86,15 @@ public class WeatherActivity extends BaseActivity {
             public void onChanged(@Nullable List<WeatherEntry> weatherEntries) {
                 if (weatherEntries != null && weatherEntries.size() > 0) {
 
-                    int nowWeatherIndex = 0;
-                    Date now = new Date();
-                    //TODO find weather entry closest to now
-
                     toggleSpinner(false);
 
                     todaysWeather = weatherEntries.get(0);
                     setUpTodaysWeather();
 
-                    setUpUpcomingWeatherByIndex(0, weatherEntries.get(nowWeatherIndex + 1));
-                    setUpUpcomingWeatherByIndex(1, weatherEntries.get(nowWeatherIndex + 2));
-                    setUpUpcomingWeatherByIndex(2, weatherEntries.get(nowWeatherIndex + 3));
-                    setUpUpcomingWeatherByIndex(3, weatherEntries.get(nowWeatherIndex + 4));
+                    setUpUpcomingWeatherByIndex(0, weatherEntries.get(1));
+                    setUpUpcomingWeatherByIndex(1, weatherEntries.get(2));
+                    setUpUpcomingWeatherByIndex(2, weatherEntries.get(3));
+                    setUpUpcomingWeatherByIndex(3, weatherEntries.get(4));
                 }
             }
         });
@@ -121,7 +119,7 @@ public class WeatherActivity extends BaseActivity {
         TextView descriptionTextView = layout.findViewById(R.id.upcoming_weather_description_text_view);
 
         Date dateOfWeather = new Date(weatherEntry.getDt() * 1000);
-        SimpleDateFormat formatter = new SimpleDateFormat("h:'00' a");
+        SimpleDateFormat formatter = new SimpleDateFormat(UPCOMING_WEATHER_TIME_FORMAT);
         timeTextView.setText(formatter.format(dateOfWeather));
 
         if (!weatherEntry.getWeather().isEmpty()) {

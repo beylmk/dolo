@@ -17,4 +17,6 @@ public class DoloUtil {
 
     public static final String LYFT_PLAY_STORE_LINK = "https://www.lyft.com/signup/SDKSIGNUP?clientId=YOUR_CLIENT_ID&sdkName=android_direct";
 
+    public static final String UPCOMING_WEATHER_TIME_FORMAT = "h:'00' a";
+
 }

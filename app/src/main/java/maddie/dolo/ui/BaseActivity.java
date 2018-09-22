@@ -11,12 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import maddie.dolo.R;
 
@@ -45,9 +49,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         NavigationView navigationView = fullView.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture)
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        ImageView profilePicture = navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture);
+        Glide.with(this)
+                .load(currentUser.getPhotoUrl())
+                .into(profilePicture);
+
         TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_profile_name);
-        userNameTextView.setText("username");
+        userNameTextView.setText(currentUser.getDisplayName());
 
     }
 
