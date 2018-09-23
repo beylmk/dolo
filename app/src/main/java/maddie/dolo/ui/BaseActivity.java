@@ -89,7 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                             Intent logoutIntent = new Intent(BaseActivity.this, LoginActivity.class);
                             logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(logoutIntent);
-                            Toast.makeText(BaseActivity.this, "Logged out", Toast.LENGTH_LONG).show();
+                            Toast.makeText(BaseActivity.this, getString(R.string.logged_out), Toast.LENGTH_LONG).show();
                         }
                     });
         } else if (id == R.id.nav_home) {

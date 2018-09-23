@@ -2,9 +2,9 @@ package maddie.dolo;
 
 public class DoloUtil {
 
-    public static final int DOLORES_LATITUDE = 28;
+    public static final double DOLORES_LATITUDE = 37.7596;
 
-    public static final int DOLORES_LONGITUDE = 122;
+    public static final double DOLORES_LONGITUDE = -122.4269;
 
     public static final String LYFT_INTENT_URI = "lyft://ridetype?id=lyft" +
             "&destination[latitude]=" + DOLORES_LATITUDE +

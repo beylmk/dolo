@@ -112,7 +112,7 @@ public class GetThereActivity extends BaseActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.setIndoorEnabled(false);
-        LatLng dolores = new LatLng(37.7596, -122.4269);
+        LatLng dolores = new LatLng(DoloUtil.DOLORES_LATITUDE, DoloUtil.DOLORES_LATITUDE);
         doloresMarker = googleMap.addMarker(new MarkerOptions()
                 .position(dolores)
                 .title(getString(R.string.marker_title))

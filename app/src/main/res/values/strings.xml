@@ -33,4 +33,5 @@
     <string name="upcoming">Upcoming</string>
     <string name="weather_refreshed">Weather Refreshed</string>
     <string name="trouble_fetching_weather">Trouble fetching weather...</string>
+    <string name="logged_out">Logged out</string>
 </resources>

@@ -23,6 +23,7 @@
 
         <ImageView
             android:id="@+id/weather_icon"
+            android:importantForAccessibility="no"
             android:layout_width="@dimen/upcoming_weather_icon_size"
             android:layout_height="@dimen/upcoming_weather_icon_size"
             />
