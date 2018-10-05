@@ -42,13 +42,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                advanceToHome();
                 // Create and launch sign-in intent
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(),
-                        RC_SIGN_IN);
+//                startActivityForResult(
+//                        AuthUI.getInstance()
+//                                .createSignInIntentBuilder()
+//                                .setAvailableProviders(providers)
+//                                .build(),
+//                        RC_SIGN_IN);
             }
         });
 

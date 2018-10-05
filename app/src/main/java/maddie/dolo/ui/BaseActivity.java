@@ -50,15 +50,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         NavigationView navigationView = fullView.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        ImageView profilePicture = navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture);
-        Glide.with(this)
-                .load(currentUser.getPhotoUrl())
-                .into(profilePicture);
-
-        TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_profile_name);
-        userNameTextView.setText(currentUser.getDisplayName());
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        ImageView profilePicture = navigationView.getHeaderView(0).findViewById(R.id.user_profile_picture);
+//        Glide.with(this)
+//                .load(currentUser.getPhotoUrl())
+//                .into(profilePicture);
+//
+//        TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.user_profile_name);
+//        userNameTextView.setText(currentUser.getDisplayName());
 
     }
 
