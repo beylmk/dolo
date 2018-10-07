@@ -1,6 +1,7 @@
 package maddie.dolo.data;
 
 import android.arch.lifecycle.LiveData;
+import android.net.Network;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class WeatherRepository {
+public class WeatherRepository implements NetworkAvailabilityTask.Consumer {
     private static int FRESH_TIMEOUT_IN_MINUTES = 1;
 
     private final WeatherService webservice;
@@ -34,20 +35,29 @@ public class WeatherRepository {
         this.executor = executor;
     }
 
-    // ---
-
     public LiveData<List<WeatherEntry>> getWeather() {
-//        Date now = new Date();
-//        Date fiveDaysAgo = new Date(now.getTime() - 10000);
-//        if (lastRefresh != null && lastRefresh.before(fiveDaysAgo)) {
-            refreshWeather();
-//        }
+        refreshWeather();
         return weatherEntryDao.getWeather(); // return a LiveData directly from the database.
     }
 
-    // ---
-
     private void refreshWeather() {
+        new NetworkAvailabilityTask(this).execute();
+    }
+
+    public Date getLastRefresh() {
+        return lastRefresh;
+    }
+
+    @Override
+    public void accept(Boolean internet) {
+        if (internet) {
+            callWeatherService();
+        } else {
+            Toast.makeText(App.context, R.string.no_internet, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void callWeatherService() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -73,9 +83,5 @@ public class WeatherRepository {
                 });
             }
         });
-    }
-
-    public Date getLastRefresh() {
-        return lastRefresh;
     }
 }

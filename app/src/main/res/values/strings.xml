@@ -34,4 +34,6 @@
     <string name="weather_refreshed">Weather Refreshed</string>
     <string name="trouble_fetching_weather">Trouble fetching weather...</string>
     <string name="logged_out">Logged out</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="no_internet">No internet connection</string>
 </resources>
